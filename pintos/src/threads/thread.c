@@ -327,7 +327,7 @@ thread_sleep(int64_t ticks)
   {
     cur->status = THREAD_BLOCKED;
     cur->sleepTicks = timer_ticks() + ticks;
-    list_insert_ordered (&sleep_list, &cur->elem, tick_compare, NULL);
+/*Need to figure this out*/    list_insert_ordered (&sleep_list, &cur->elem, SOMETHINGOGESHERE, NULL);
   }
   schedule();
   intr_set_level (old_level);
@@ -339,39 +339,10 @@ thread_sleep(int64_t ticks)
 void
 thread_wake()
 { 
-  struct list_elem *temp, *mid;
-  struct thread *st;
-
-  for(temp = list_begin(&sleep_list); temp != list_end(&sleep_list);)
-  {
-      st = list_entry(temp, struct thread, elem);
-      //Wakes up the thread if enough time has passed.
-      if(timer_ticks() >= st -> sleepTicks)
-      {
-          mid = list_remove(temp);
-          st = list_entry(temp, struct thread, elem);
-          thread_unblock(st);
-          temp = mid;
-      }
-      else
-      {
-          break;
-      }
-  }
-//  list_remove(&sleeping->elem);
- // list_push_back (&ready_list, &sleeping->elem);
-//  sleeping->status = THREAD_READY;
+  list_remove(&sleeping->elem);
+  list_push_back (&ready_list, &sleeping->elem);
+  sleeping->status = THREAD_READY;
   
-}
-
-bool
-tick_compare(const struct list_elem *a, const struct list_elem *b)
-{
-    struct thread *a_thread, *b_thread;
-    a_thread = list_entry (a, struct thread, elem);
-    b_thread = list_entry (b, struct thread, elem);
-
-    return (a_thread -> sleepTicks < b_thread -> sleepTicks);
 }
 
 /* Yields the CPU.  The current thread is not put to sleep and
