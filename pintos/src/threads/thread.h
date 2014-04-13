@@ -128,7 +128,6 @@ const char *thread_name (void);
 void thread_exit (void) NO_RETURN;
 /*MODIFIED BY US*/
 void  thread_sleep(int64_t ticks);
-bool tick_compare(const struct list_elem*, const struct list_elem*);
 void thread_wake(void);
 
 void thread_yield (void);
