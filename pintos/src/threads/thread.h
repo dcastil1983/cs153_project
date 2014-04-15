@@ -129,6 +129,7 @@ void thread_exit (void) NO_RETURN;
 /*MODIFIED BY US*/
 void  thread_sleep(int64_t ticks);
 void thread_wake(void);
+bool less_ticks(const struct list_elem *a, const struct list_elem *b, void *aux UNUSED);
 
 void thread_yield (void);
 

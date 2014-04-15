@@ -11,6 +11,7 @@
 #include "threads/switch.h"
 #include "threads/synch.h"
 #include "threads/vaddr.h"
+#include  "devices/timer.h"
 #ifdef USERPROG
 #include "userprog/process.h"
 #endif
@@ -311,6 +312,18 @@ thread_exit (void)
   NOT_REACHED ();
 }
 
+/*MODIFIED BY US
+ * Function that compares sleepTicks of two threads and returns a<b
+ */
+
+bool less_ticks(const struct list_elem *a,const struct list_elem *b, void *aux UNUSED)
+{
+    struct thread *tempThreadA = list_entry(a, struct thread, elem);
+    struct thread *tempThreadB = list_entry(b, struct thread, elem);
+
+    return (tempThreadA -> sleepTicks < tempThreadB -> sleepTicks);
+}
+
 /*
  * Puts thread on a sleep list and changes the status to  THREAD_BLOCKED
  */
@@ -319,15 +332,14 @@ thread_sleep(int64_t ticks)
 {
   struct thread *cur = thread_current();
   enum intr_level old_level;
-
-  ASSERT (!intr_context ());
-
+  
+  ASSERT(!intr_context());
   old_level = intr_disable();
-  if (cur != idle_thread)
+  if(cur != idle_thread)
   {
-    cur->status = THREAD_BLOCKED;
-    cur->sleepTicks = timer_ticks() + ticks;
-/*Need to figure this out*/    list_insert_ordered (&sleep_list, &cur->elem, SOMETHINGOGESHERE, NULL);
+    cur->sleepTicks = ticks;
+    cur -> status = THREAD_BLOCKED;
+    list_insert_ordered (&sleep_list, &cur->elem, less_ticks, NULL);
   }
   schedule();
   intr_set_level (old_level);
@@ -339,12 +351,28 @@ thread_sleep(int64_t ticks)
 void
 thread_wake()
 { 
-  list_remove(&sleeping->elem);
-  list_push_back (&ready_list, &sleeping->elem);
-  sleeping->status = THREAD_READY;
-  
-}
+    struct list_elem *e;
+    struct list_elem *tempElem;
+    struct thread *tempThread;
+    for(e = list_begin(&sleep_list); e != list_end(&sleep_list);/*e = list_next(e)*/)
+    {
+        tempThread = list_entry(e, struct thread, elem);
 
+        if(timer_ticks() >= tempThread -> sleepTicks)
+        {
+             e = list_remove(e);
+            enum intr_level test_level = intr_disable();
+            thread_unblock(tempThread);
+            intr_set_level (test_level);
+        }
+        else
+        {
+            //No use incrementing here because of priority queue.
+            break;
+        }
+
+    }
+}
 /* Yields the CPU.  The current thread is not put to sleep and
    may be scheduled again immediately at the scheduler's whim. */
 void

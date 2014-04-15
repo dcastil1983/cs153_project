@@ -90,9 +90,12 @@ void
 timer_sleep (int64_t ticks) 
 {
 //  int64_t start = timer_ticks ();
+  enum intr_level test_level = intr_disable(); 
+  ASSERT (intr_get_level () == INTR_OFF);
+  thread_sleep(ticks + timer_ticks());
 
+  intr_set_level (test_level);
   ASSERT (intr_get_level () == INTR_ON);
-  thread_sleep(ticks);
 /*
   while (timer_elapsed (start) < ticks) 
     thread_yield ();
