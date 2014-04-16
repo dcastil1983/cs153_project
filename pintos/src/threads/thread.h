@@ -104,7 +104,7 @@ struct thread
     int64_t sleepTicks;
   };
 
-/* If false (default), use round-robin scheduler.
+/* If false (default), use round-robin seheduler.
    If true, use multi-level feedback queue scheduler.
    Controlled by kernel command-line option "-o mlfqs". */
 extern bool thread_mlfqs;

@@ -29,6 +29,8 @@ static struct list ready_list;
 /*Sleep list/queue. Used to put threads to sleep.*/
 static struct list sleep_list;
 
+struct list priArray[63];
+
 
 /* List of all processes.  Processes are added to this list
    when they are first scheduled and removed when they exit. */
@@ -100,6 +102,11 @@ thread_init (void)
   list_init (&all_list);
   list_init (&sleep_list);
 
+  int64_t i = 0;
+  for(; i < 64; i++)
+  {
+      list_init(&priArray[i]);
+  }
   /* Set up a thread structure for the running thread. */
   initial_thread = running_thread ();
   init_thread (initial_thread, "main", PRI_DEFAULT);
@@ -352,7 +359,6 @@ void
 thread_wake()
 { 
     struct list_elem *e;
-    struct list_elem *tempElem;
     struct thread *tempThread;
     for(e = list_begin(&sleep_list); e != list_end(&sleep_list);/*e = list_next(e)*/)
     {
@@ -412,7 +418,12 @@ thread_foreach (thread_action_func *func, void *aux)
 void
 thread_set_priority (int new_priority) 
 {
+  int temp;
   thread_current ()->priority = new_priority;
+  temp = thread_current() -> priority% 63;
+  //List_push_back is void, so it doesn't return anything, causing an error.
+  list_push_back(&priArray[temp],&thread_current() ->  elem);
+
 }
 
 /* Returns the current thread's priority. */

@@ -449,13 +449,13 @@ THREADS_VADDR_H	pintos/src/threads/vaddr.h	2;"	d
 THREAD_BLOCKED	pintos/src/threads/thread.h	/^    THREAD_BLOCKED,     \/* Waiting for an event to trigger. *\/$/;"	e	enum:thread_status
 THREAD_CNT	pintos/src/tests/threads/priority-fifo.c	26;"	d	file:
 THREAD_DYING	pintos/src/threads/thread.h	/^    THREAD_DYING        \/* About to be destroyed. *\/$/;"	e	enum:thread_status
-THREAD_MAGIC	pintos/src/threads/thread.c	21;"	d	file:
+THREAD_MAGIC	pintos/src/threads/thread.c	22;"	d	file:
 THREAD_READY	pintos/src/threads/thread.h	/^    THREAD_READY,       \/* Not running but ready to run. *\/$/;"	e	enum:thread_status
 THREAD_RUNNING	pintos/src/threads/thread.h	/^    THREAD_RUNNING,     \/* Running thread. *\/$/;"	e	enum:thread_status
 THR_REG	pintos/src/devices/serial.c	22;"	d	file:
 TID_ERROR	pintos/src/threads/thread.h	20;"	d
 TIMER_FREQ	pintos/src/devices/timer.h	8;"	d
-TIME_SLICE	pintos/src/threads/thread.c	59;"	d	file:
+TIME_SLICE	pintos/src/threads/thread.c	60;"	d	file:
 UCHAR_MAX	pintos/src/lib/limits.h	8;"	d
 UINT16_MAX	pintos/src/lib/stdint.h	24;"	d
 UINT32_MAX	pintos/src/lib/stdint.h	27;"	d
@@ -1204,6 +1204,7 @@ left_shift	pintos/src/devices/kbd.c	/^static bool left_shift, right_shift;    \/
 length	pintos/src/filesys/inode.c	/^    off_t length;                       \/* File size in bytes. *\/$/;"	m	struct:inode_disk	file:
 length	pintos/src/lib/stdio.c	/^    int length;         \/* Length of output string. *\/$/;"	m	struct:vsnprintf_aux	file:
 less	pintos/src/lib/kernel/hash.h	/^    hash_less_func *less;       \/* Comparison function. *\/$/;"	m	struct:hash
+less_ticks	pintos/src/threads/thread.c	/^bool less_ticks(const struct list_elem *a,const struct list_elem *b, void *aux UNUSED)$/;"	f
 lib_SRC	pintos/src/threads/build/Makefile	/^lib_SRC  = lib\/debug.c			# Debug helpers.$/;"	m
 lineup_SRC	pintos/src/examples/Makefile	/^lineup_SRC = lineup.c$/;"	m
 linkname	pintos/src/lib/ustar.c	/^    char linkname[100];         \/* Name of link target.$/;"	m	struct:ustar_header	file:
