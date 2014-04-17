@@ -102,7 +102,7 @@ struct thread
     unsigned magic;                     /* Detects stack overflow. */
     /*Counter for the timer to put thread to sleep*/
     int64_t sleepTicks;//MODIFIED BY US
-    int tempPriority; //MODIFIED BY US
+    int donatedPriority; //MODIFIED BY US
   };
 
 /* If false (default), use round-robin seheduler.
@@ -131,6 +131,7 @@ void thread_exit (void) NO_RETURN;
 void  thread_sleep(int64_t ticks);
 void thread_wake(void);
 bool less_ticks(const struct list_elem *a, const struct list_elem *b, void *aux UNUSED);
+bool less_priority(const struct list_elem *a, const struct list_elem *b, void *aux UNUSED);
 
 void thread_yield (void);
 
