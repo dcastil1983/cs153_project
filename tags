@@ -1204,7 +1204,7 @@ left_shift	pintos/src/devices/kbd.c	/^static bool left_shift, right_shift;    \/
 length	pintos/src/filesys/inode.c	/^    off_t length;                       \/* File size in bytes. *\/$/;"	m	struct:inode_disk	file:
 length	pintos/src/lib/stdio.c	/^    int length;         \/* Length of output string. *\/$/;"	m	struct:vsnprintf_aux	file:
 less	pintos/src/lib/kernel/hash.h	/^    hash_less_func *less;       \/* Comparison function. *\/$/;"	m	struct:hash
-less_priority	pintos/src/threads/thread.c	/^bool less_priority(const struct list_elem *a, const struct list_elem *b, void *aux NOTUSED)$/;"	f
+less_priority	pintos/src/threads/thread.c	/^bool less_priority(const struct list_elem *a, const struct list_elem *b, void *aux UNUSED)$/;"	f
 less_ticks	pintos/src/threads/thread.c	/^bool less_ticks(const struct list_elem *a,const struct list_elem *b, void *aux UNUSED)$/;"	f
 lib_SRC	pintos/src/threads/build/Makefile	/^lib_SRC  = lib\/debug.c			# Debug helpers.$/;"	m
 lineup_SRC	pintos/src/examples/Makefile	/^lineup_SRC = lineup.c$/;"	m
@@ -1670,7 +1670,7 @@ simple_thread_func	pintos/src/tests/threads/priority-preempt.c	/^static thread_f
 size	pintos/src/devices/block.c	/^    block_sector_t size;                 \/* Size in sectors. *\/$/;"	m	struct:block	file:
 size	pintos/src/lib/ustar.c	/^    char size[12];              \/* File size in bytes as octal string. *\/$/;"	m	struct:ustar_header	file:
 size_t	pintos/src/lib/stddef.h	/^typedef __SIZE_TYPE__ size_t;$/;"	t
-sleepTicks	pintos/src/threads/thread.h	/^    int64_t sleepTicks;$/;"	m	struct:thread
+sleepTicks	pintos/src/threads/thread.h	/^    int64_t sleepTicks;\/\/MODIFIED BY US$/;"	m	struct:thread
 sleep_list	pintos/src/threads/thread.c	/^static struct list sleep_list;$/;"	v	typeref:struct:list	file:
 sleep_test	pintos/src/tests/threads/alarm-simultaneous.c	/^struct sleep_test $/;"	s	file:
 sleep_test	pintos/src/tests/threads/alarm-wait.c	/^struct sleep_test $/;"	s	file:
@@ -1742,6 +1742,7 @@ syscall_init	pintos/src/userprog/syscall.c	/^syscall_init (void) $/;"	f
 tail	pintos/src/devices/intq.h	/^    int tail;                   \/* Old data is read here. *\/$/;"	m	struct:intq
 tail	pintos/src/lib/kernel/list.h	/^    struct list_elem tail;      \/* List tail. *\/$/;"	m	struct:list	typeref:struct:list::list_elem
 tell	pintos/src/lib/user/syscall.c	/^tell (int fd) $/;"	f
+tempPriority	pintos/src/threads/thread.h	/^    int tempPriority; \/\/MODIFIED BY US$/;"	m	struct:thread
 test	pintos/src/tests/internal/list.c	/^test (void) $/;"	f
 test	pintos/src/tests/internal/stdio.c	/^test (void) $/;"	f
 test	pintos/src/tests/internal/stdlib.c	/^test (void) $/;"	f
