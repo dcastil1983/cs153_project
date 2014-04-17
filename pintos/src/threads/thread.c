@@ -570,13 +570,28 @@ alloc_frame (struct thread *t, size_t size)
    empty.  (If the running thread can continue running, then it
    will be in the run queue.)  If the run queue is empty, return
    idle_thread. */
+
+bool less_priority(const struct list_elem *a, const struct list_elem *b, void *aux UNUSED)
+{
+    struct thread *tempThreadA = list_entry(a, struct thread, elem);
+    struct thread *tempThreadB = list_entry(b, struct thread, elem);
+    return (tempThreadA -> priority < tempThreadB -> priority); 
+}
 static struct thread *
 next_thread_to_run (void) 
 {
+  //struct list_elem* max;
   if (list_empty (&ready_list))
     return idle_thread;
   else
+  {
+    
     return list_entry (list_pop_front (&ready_list), struct thread, elem);
+    /*
+    max = list_max(&read_list,**Need to make this function**, NULL);
+    return list_entry (max, struct thread, elem);
+    */
+  }
 }
 
 /* Completes a thread switch by activating the new thread's page

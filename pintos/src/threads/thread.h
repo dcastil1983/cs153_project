@@ -101,7 +101,8 @@ struct thread
     /* Owned by thread.c. */
     unsigned magic;                     /* Detects stack overflow. */
     /*Counter for the timer to put thread to sleep*/
-    int64_t sleepTicks;
+    int64_t sleepTicks;//MODIFIED BY US
+    int tempPriority; //MODIFIED BY US
   };
 
 /* If false (default), use round-robin seheduler.
