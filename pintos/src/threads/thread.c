@@ -254,6 +254,8 @@ thread_block (void)
 void
 thread_unblock (struct thread *t) 
 {
+  struct list_elem *currMax = list_max(&ready_list, less_priority, NULL);
+  struct thread *tempThread = list_entry(currMax, struct thread, elem);
   enum intr_level old_level;
 
   ASSERT (is_thread (t));
@@ -263,6 +265,10 @@ thread_unblock (struct thread *t)
   list_push_back (&ready_list, &t->elem);
   t->status = THREAD_READY;
   intr_set_level (old_level);
+  if(thread_current() -> priority > tempThread -> priority)
+  {
+      thread_yield();
+  }
 }
 
 /* Returns the name of the running thread. */
@@ -337,6 +343,7 @@ bool less_ticks(const struct list_elem *a,const struct list_elem *b, void *aux U
 void
 thread_sleep(int64_t ticks)
 {
+  /* May have to remove from ready list */
   struct thread *cur = thread_current();
   enum intr_level old_level;
   
@@ -418,19 +425,24 @@ thread_foreach (thread_action_func *func, void *aux)
 void
 thread_set_priority (int new_priority) 
 {
-  int temp;
+  int temp = thread_current() -> priority;
   thread_current ()->priority = new_priority;
-  temp = thread_current() -> priority% 63;
-  //List_push_back is void, so it doesn't return anything, causing an error.
-  list_push_back(&priArray[temp],&thread_current() ->  elem);
-
+  if(temp > new_priority)
+  {
+    thread_yield();
+  }
 }
 
 /* Returns the current thread's priority. */
 int
 thread_get_priority (void) 
 {
-  return thread_current ()->priority;
+  if(thread_current() -> priority > thread_current() -> donatedPriority)
+  {
+      return thread_current ()-> priority;
+  }
+  else
+      return thread_current() -> donatedPriority;
 }
 
 /* Sets the current thread's nice value to NICE. */
@@ -580,17 +592,18 @@ bool less_priority(const struct list_elem *a, const struct list_elem *b, void *a
 static struct thread *
 next_thread_to_run (void) 
 {
-  //struct list_elem* max;
+  struct list_elem* max;
   if (list_empty (&ready_list))
     return idle_thread;
   else
   {
     
-    return list_entry (list_pop_front (&ready_list), struct thread, elem);
-    /*
-    max = list_max(&read_list,**Need to make this function**, NULL);
+    //return list_entry (list_pop_front (&ready_list), struct thread, elem);
+    
+    max = list_max(&ready_list,less_priority, NULL);
+    list_remove(max);
     return list_entry (max, struct thread, elem);
-    */
+    
   }
 }
 

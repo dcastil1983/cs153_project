@@ -831,6 +831,7 @@ do_set_part	pintos/src/utils/Pintos.pm	/^sub do_set_part {$/;"	s
 do_swap	pintos/src/lib/stdlib.c	/^do_swap (unsigned char *array, size_t a_idx, size_t b_idx, size_t size)$/;"	f	file:
 do_touch	pintos/src/tests/filesys/extended/mk-tree.c	/^do_touch (const char *format, ...)$/;"	f	file:
 do_write	pintos/src/tests/filesys/extended/tar.c	/^do_write (int fd, const char *buffer, int size, bool *write_error) $/;"	f	file:
+donatedPriority	pintos/src/threads/thread.h	/^    int donatedPriority; \/\/MODIFIED BY US$/;"	m	struct:thread
 donor_thread_func	pintos/src/tests/threads/priority-donate-chain.c	/^donor_thread_func (void *locks_) $/;"	f	file:
 donor_thread_func	pintos/src/tests/threads/priority-donate-chain.c	/^static thread_func donor_thread_func;$/;"	v	file:
 ds	pintos/src/threads/interrupt.h	/^    uint16_t ds, :16;           \/* Saved DS segment register. *\/$/;"	m	struct:intr_frame
@@ -1204,7 +1205,7 @@ left_shift	pintos/src/devices/kbd.c	/^static bool left_shift, right_shift;    \/
 length	pintos/src/filesys/inode.c	/^    off_t length;                       \/* File size in bytes. *\/$/;"	m	struct:inode_disk	file:
 length	pintos/src/lib/stdio.c	/^    int length;         \/* Length of output string. *\/$/;"	m	struct:vsnprintf_aux	file:
 less	pintos/src/lib/kernel/hash.h	/^    hash_less_func *less;       \/* Comparison function. *\/$/;"	m	struct:hash
-less_priority	pintos/src/threads/thread.c	/^bool less_priority(const struct list_elem *a, const struct list_elem *b, void *aux NOTUSED)$/;"	f
+less_priority	pintos/src/threads/thread.c	/^bool less_priority(const struct list_elem *a, const struct list_elem *b, void *aux UNUSED)$/;"	f
 less_ticks	pintos/src/threads/thread.c	/^bool less_ticks(const struct list_elem *a,const struct list_elem *b, void *aux UNUSED)$/;"	f
 lib_SRC	pintos/src/threads/build/Makefile	/^lib_SRC  = lib\/debug.c			# Debug helpers.$/;"	m
 lineup_SRC	pintos/src/examples/Makefile	/^lineup_SRC = lineup.c$/;"	m
@@ -1670,7 +1671,7 @@ simple_thread_func	pintos/src/tests/threads/priority-preempt.c	/^static thread_f
 size	pintos/src/devices/block.c	/^    block_sector_t size;                 \/* Size in sectors. *\/$/;"	m	struct:block	file:
 size	pintos/src/lib/ustar.c	/^    char size[12];              \/* File size in bytes as octal string. *\/$/;"	m	struct:ustar_header	file:
 size_t	pintos/src/lib/stddef.h	/^typedef __SIZE_TYPE__ size_t;$/;"	t
-sleepTicks	pintos/src/threads/thread.h	/^    int64_t sleepTicks;$/;"	m	struct:thread
+sleepTicks	pintos/src/threads/thread.h	/^    int64_t sleepTicks;\/\/MODIFIED BY US$/;"	m	struct:thread
 sleep_list	pintos/src/threads/thread.c	/^static struct list sleep_list;$/;"	v	typeref:struct:list	file:
 sleep_test	pintos/src/tests/threads/alarm-simultaneous.c	/^struct sleep_test $/;"	s	file:
 sleep_test	pintos/src/tests/threads/alarm-wait.c	/^struct sleep_test $/;"	s	file:
