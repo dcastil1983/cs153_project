@@ -455,7 +455,7 @@ THREAD_RUNNING	pintos/src/threads/thread.h	/^    THREAD_RUNNING,     \/* Running
 THR_REG	pintos/src/devices/serial.c	22;"	d	file:
 TID_ERROR	pintos/src/threads/thread.h	20;"	d
 TIMER_FREQ	pintos/src/devices/timer.h	8;"	d
-TIME_SLICE	pintos/src/threads/thread.c	60;"	d	file:
+TIME_SLICE	pintos/src/threads/thread.c	62;"	d	file:
 UCHAR_MAX	pintos/src/lib/limits.h	8;"	d
 UINT16_MAX	pintos/src/lib/stdint.h	24;"	d
 UINT32_MAX	pintos/src/lib/stdint.h	27;"	d
@@ -1204,6 +1204,7 @@ left_shift	pintos/src/devices/kbd.c	/^static bool left_shift, right_shift;    \/
 length	pintos/src/filesys/inode.c	/^    off_t length;                       \/* File size in bytes. *\/$/;"	m	struct:inode_disk	file:
 length	pintos/src/lib/stdio.c	/^    int length;         \/* Length of output string. *\/$/;"	m	struct:vsnprintf_aux	file:
 less	pintos/src/lib/kernel/hash.h	/^    hash_less_func *less;       \/* Comparison function. *\/$/;"	m	struct:hash
+less_priority	pintos/src/threads/thread.c	/^bool less_priority(const struct list_elem *a, const struct list_elem *b, void *aux NOTUSED)$/;"	f
 less_ticks	pintos/src/threads/thread.c	/^bool less_ticks(const struct list_elem *a,const struct list_elem *b, void *aux UNUSED)$/;"	f
 lib_SRC	pintos/src/threads/build/Makefile	/^lib_SRC  = lib\/debug.c			# Debug helpers.$/;"	m
 lineup_SRC	pintos/src/examples/Makefile	/^lineup_SRC = lineup.c$/;"	m
@@ -1488,6 +1489,7 @@ prepare	pintos/src/tests/Algorithm/Diff.pm	/^sub prepare$/;"	s
 prepare_scratch_disk	pintos/src/utils/pintos	/^sub prepare_scratch_disk {$/;"	s
 prepend	pintos/src/examples/pwd.c	/^prepend (const char *prefix,$/;"	f	file:
 prev	pintos/src/lib/kernel/list.h	/^    struct list_elem *prev;     \/* Previous list element. *\/$/;"	m	struct:list_elem	typeref:struct:list_elem::list_elem
+priArray	pintos/src/threads/thread.c	/^struct list priArray[63];$/;"	v	typeref:struct:list
 print_bochs_disk_line	pintos/src/utils/pintos	/^sub print_bochs_disk_line {$/;"	s
 print_fs	pintos/src/tests/tests.pm	/^sub print_fs {$/;"	s
 print_human_readable_size	pintos/src/lib/stdio.c	/^print_human_readable_size (uint64_t size) $/;"	f
