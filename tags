@@ -831,6 +831,7 @@ do_set_part	pintos/src/utils/Pintos.pm	/^sub do_set_part {$/;"	s
 do_swap	pintos/src/lib/stdlib.c	/^do_swap (unsigned char *array, size_t a_idx, size_t b_idx, size_t size)$/;"	f	file:
 do_touch	pintos/src/tests/filesys/extended/mk-tree.c	/^do_touch (const char *format, ...)$/;"	f	file:
 do_write	pintos/src/tests/filesys/extended/tar.c	/^do_write (int fd, const char *buffer, int size, bool *write_error) $/;"	f	file:
+donatedPriority	pintos/src/threads/thread.h	/^    int donatedPriority; \/\/MODIFIED BY US$/;"	m	struct:thread
 donor_thread_func	pintos/src/tests/threads/priority-donate-chain.c	/^donor_thread_func (void *locks_) $/;"	f	file:
 donor_thread_func	pintos/src/tests/threads/priority-donate-chain.c	/^static thread_func donor_thread_func;$/;"	v	file:
 ds	pintos/src/threads/interrupt.h	/^    uint16_t ds, :16;           \/* Saved DS segment register. *\/$/;"	m	struct:intr_frame
@@ -1742,7 +1743,6 @@ syscall_init	pintos/src/userprog/syscall.c	/^syscall_init (void) $/;"	f
 tail	pintos/src/devices/intq.h	/^    int tail;                   \/* Old data is read here. *\/$/;"	m	struct:intq
 tail	pintos/src/lib/kernel/list.h	/^    struct list_elem tail;      \/* List tail. *\/$/;"	m	struct:list	typeref:struct:list::list_elem
 tell	pintos/src/lib/user/syscall.c	/^tell (int fd) $/;"	f
-tempPriority	pintos/src/threads/thread.h	/^    int tempPriority; \/\/MODIFIED BY US$/;"	m	struct:thread
 test	pintos/src/tests/internal/list.c	/^test (void) $/;"	f
 test	pintos/src/tests/internal/stdio.c	/^test (void) $/;"	f
 test	pintos/src/tests/internal/stdlib.c	/^test (void) $/;"	f

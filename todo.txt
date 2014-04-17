@@ -1,0 +1,5 @@
+1) Create a function that donates priority
+
+2) Create a function that checks if a thread needs to donate to another
+thread.
+
