@@ -103,6 +103,10 @@ struct thread
     /*Counter for the timer to put thread to sleep*/
     int64_t sleepTicks;//MODIFIED BY US
     int donatedPriority; //MODIFIED BY US
+    bool donated; //MODIFIED BY US
+    int realPriority;//MODIFIED BY US
+    struct thread *donateTo; //MODIFIED BY US
+    bool hasLock;
   };
 
 /* If false (default), use round-robin seheduler.
@@ -127,11 +131,21 @@ tid_t thread_tid (void);
 const char *thread_name (void);
 
 void thread_exit (void) NO_RETURN;
+////////////////////////////////////
 /*MODIFIED BY US*/
 void  thread_sleep(int64_t ticks);
 void thread_wake(void);
 bool less_ticks(const struct list_elem *a, const struct list_elem *b, void *aux UNUSED);
 bool less_priority(const struct list_elem *a, const struct list_elem *b, void *aux UNUSED);
+struct thread *max_priority_thread(void);
+void donate_priority(struct thread *donator, struct thread *recipient);
+int get_lock_priority(struct thread *lock);
+bool is_Thread(struct thread *t);
+void lock_add(struct thread *lock);
+void lock_remove(void);
+bool most_priority(const struct list_elem *a, const struct list_elem *b, void *aux UNUSED);
+
+////////////////////////////////////
 
 void thread_yield (void);
 

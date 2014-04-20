@@ -26,11 +26,13 @@
 static struct list ready_list;
 
 /*MODIFIED BY US*/
+////////////////////////////////////////
 /*Sleep list/queue. Used to put threads to sleep.*/
 static struct list sleep_list;
 
-struct list priArray[63];
-
+/*Lock list/queue. Holds all the threads that have a lock*/
+static struct list lock_list;
+////////////////////////////////////////
 
 /* List of all processes.  Processes are added to this list
    when they are first scheduled and removed when they exit. */
@@ -101,16 +103,13 @@ thread_init (void)
   list_init (&ready_list);
   list_init (&all_list);
   list_init (&sleep_list);
+  list_init (&lock_list);
 
-  int64_t i = 0;
-  for(; i < 64; i++)
-  {
-      list_init(&priArray[i]);
-  }
   /* Set up a thread structure for the running thread. */
   initial_thread = running_thread ();
   init_thread (initial_thread, "main", PRI_DEFAULT);
   initial_thread->status = THREAD_RUNNING;
+//  initial_thread->hasLock = true;
   initial_thread->tid = allocate_tid ();
 }
 
@@ -425,24 +424,61 @@ thread_foreach (thread_action_func *func, void *aux)
 void
 thread_set_priority (int new_priority) 
 {
-  int temp = thread_current() -> priority;
-  thread_current ()->priority = new_priority;
-  if(temp > new_priority)
+  
+//  struct thread* currThread = thread_current();
+  struct thread* currMax = max_priority_thread();
+//    struct list_elem* e = list_max(&ready_list, most_priority, NULL);
+//    struct thread *t = list_entry(e, struct thread, elem);
+  
+  if(thread_current() -> hasLock == false)
+  {
+      thread_current() -> priority = new_priority;
+      thread_current() -> realPriority = new_priority;
+  }
+  else
+  {
+      thread_current() -> realPriority = new_priority;
+  }
+
+  if(thread_current() -> priority < currMax -> priority)
   {
     thread_yield();
   }
 }
 
+
+/*MADE BY US */
+/*
+void
+lock_add(struct thread *lock)
+{
+    list_push_back(&lock_list,&lock -> elem);
+}
+
+void
+lock_remove(void)
+{
+    list_pop_front(&lock_list);
+}
+*/
+/*MADE BY US*/
+int
+get_lock_priority(struct thread *lock)
+{
+  if(lock -> priority > lock -> realPriority)
+  {
+      return lock -> realPriority;
+  }
+  else
+      return lock -> realPriority;
+}
+
+
 /* Returns the current thread's priority. */
 int
 thread_get_priority (void) 
 {
-  if(thread_current() -> priority > thread_current() -> donatedPriority)
-  {
-      return thread_current ()-> priority;
-  }
-  else
-      return thread_current() -> donatedPriority;
+    return thread_current() -> priority;
 }
 
 /* Sets the current thread's nice value to NICE. */
@@ -546,6 +582,13 @@ is_thread (struct thread *t)
   return t != NULL && t->magic == THREAD_MAGIC;
 }
 
+
+bool
+is_Thread (struct thread *t)
+{
+  return t != NULL && t->magic == THREAD_MAGIC;
+}
+
 /* Does basic initialization of T as a blocked thread named
    NAME. */
 static void
@@ -560,6 +603,8 @@ init_thread (struct thread *t, const char *name, int priority)
   strlcpy (t->name, name, sizeof t->name);
   t->stack = (uint8_t *) t + PGSIZE;
   t->priority = priority;
+  t->hasLock = false;
+  t->realPriority = priority;
   t->magic = THREAD_MAGIC;
   list_push_back (&all_list, &t->allelem);
 }
@@ -582,6 +627,13 @@ alloc_frame (struct thread *t, size_t size)
    empty.  (If the running thread can continue running, then it
    will be in the run queue.)  If the run queue is empty, return
    idle_thread. */
+
+bool most_priority(const struct list_elem *a, const struct list_elem *b, void *aux UNUSED)
+{
+    struct thread *tempThreadA = list_entry(a, struct thread, elem);
+    struct thread *tempThreadB = list_entry(b, struct thread, elem);
+    return (tempThreadA -> priority > tempThreadB -> priority); 
+}
 
 bool less_priority(const struct list_elem *a, const struct list_elem *b, void *aux UNUSED)
 {
@@ -660,6 +712,26 @@ thread_schedule_tail (struct thread *prev)
 
    It's not safe to call printf() until thread_schedule_tail()
    has completed. */
+
+void donate_priority(struct thread* recipient, struct thread *donor)
+{
+    donor -> donateTo = recipient;
+    recipient -> priority = donor -> priority;
+    for(; donor != NULL; donor = donor -> donateTo)
+    {
+        donor -> priority = recipient -> priority;
+    }
+
+}
+
+struct thread*
+max_priority_thread(void)
+{
+    struct list_elem *currMax = list_max(&ready_list, less_priority, NULL);
+    struct thread *tempThread = list_entry(currMax, struct thread, elem);
+    return tempThread;
+}
+
 static void
 schedule (void) 
 {
