@@ -260,26 +260,13 @@ lock_release (struct lock *lock)
   
   enum intr_level old_level; 
   old_level = intr_disable();
-//  lock_remove(currThread);
-//  bool yield = false;
 
   lock->holder = NULL;
-//  tempThread -> priority = tempThread -> donatedPriority;
-//  if(currThread -> priority > currThread -> realPriority)
-//  {
-//      yield = true;
       currThread -> priority = currThread -> realPriority;
       currThread -> hasLock = false;
-//  }
 
   sema_up (&lock->semaphore);
 
-/*
-  if(yield)
-  {
-      thread_yield();
-  }
-*/
   intr_set_level(old_level);
 }
 
@@ -293,7 +280,6 @@ lock_held_by_current_thread (const struct lock *lock)
 
   return lock->holder == thread_current ();
 }
-
 /* One semaphore in a list. */
 struct semaphore_elem 
   {

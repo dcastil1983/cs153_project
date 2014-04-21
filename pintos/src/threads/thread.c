@@ -335,7 +335,27 @@ bool less_ticks(const struct list_elem *a,const struct list_elem *b, void *aux U
 
     return (tempThreadA -> sleepTicks < tempThreadB -> sleepTicks);
 }
+////////////////////////////////////////////////////////////////////
+/* MOODIFED BY US*/
 
+void donate_priority(struct thread* recipient, struct thread *donor)
+{
+    donor -> donateTo = recipient;
+    recipient -> priority = donor -> priority;
+    for(; donor != NULL; donor = donor -> donateTo)
+    {
+        donor -> priority = recipient -> priority;
+    }
+
+}
+
+struct thread*
+max_priority_thread(void)
+{
+    struct list_elem *currMax = list_max(&ready_list, less_priority, NULL);
+    struct thread *tempThread = list_entry(currMax, struct thread, elem);
+    return tempThread;
+}
 /*
  * Puts thread on a sleep list and changes the status to  THREAD_BLOCKED
  */
@@ -385,6 +405,11 @@ thread_wake()
 
     }
 }
+////////////////////////////////////////////////////////////////////
+
+
+
+
 /* Yields the CPU.  The current thread is not put to sleep and
    may be scheduled again immediately at the scheduler's whim. */
 void
@@ -511,7 +536,6 @@ thread_get_recent_cpu (void)
   /* Not yet implemented. */
   return 0;
 }
-
 /* Idle thread.  Executes when no other thread is ready to run.
 
    The idle thread is initially put on the ready list by
@@ -712,26 +736,6 @@ thread_schedule_tail (struct thread *prev)
 
    It's not safe to call printf() until thread_schedule_tail()
    has completed. */
-
-void donate_priority(struct thread* recipient, struct thread *donor)
-{
-    donor -> donateTo = recipient;
-    recipient -> priority = donor -> priority;
-    for(; donor != NULL; donor = donor -> donateTo)
-    {
-        donor -> priority = recipient -> priority;
-    }
-
-}
-
-struct thread*
-max_priority_thread(void)
-{
-    struct list_elem *currMax = list_max(&ready_list, less_priority, NULL);
-    struct thread *tempThread = list_entry(currMax, struct thread, elem);
-    return tempThread;
-}
-
 static void
 schedule (void) 
 {
@@ -761,7 +765,6 @@ allocate_tid (void)
 
   return tid;
 }
-
 /* Offset of `stack' member within `struct thread'.
    Used by switch.S, which can't figure it out on its own. */
 uint32_t thread_stack_ofs = offsetof (struct thread, stack);
