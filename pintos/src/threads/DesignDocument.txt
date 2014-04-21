@@ -140,9 +140,9 @@ is then incremented to show that a lock has been given up.
 >> how your implementation avoids it.  Can you use a lock to avoid
 >> this race?
 
-//
-//
-//
+If there was an interrupt right when set_priority was called, it could result in a race 
+condition. But since we don't use set priority and we change priority
+directly, we avoid that issue.
 
 ---- RATIONALE ----
 
