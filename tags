@@ -455,7 +455,7 @@ THREAD_RUNNING	pintos/src/threads/thread.h	/^    THREAD_RUNNING,     \/* Running
 THR_REG	pintos/src/devices/serial.c	22;"	d	file:
 TID_ERROR	pintos/src/threads/thread.h	20;"	d
 TIMER_FREQ	pintos/src/devices/timer.h	8;"	d
-TIME_SLICE	pintos/src/threads/thread.c	62;"	d	file:
+TIME_SLICE	pintos/src/threads/thread.c	66;"	d	file:
 UCHAR_MAX	pintos/src/lib/limits.h	8;"	d
 UINT16_MAX	pintos/src/lib/stdint.h	24;"	d
 UINT32_MAX	pintos/src/lib/stdint.h	27;"	d
@@ -831,6 +831,8 @@ do_set_part	pintos/src/utils/Pintos.pm	/^sub do_set_part {$/;"	s
 do_swap	pintos/src/lib/stdlib.c	/^do_swap (unsigned char *array, size_t a_idx, size_t b_idx, size_t size)$/;"	f	file:
 do_touch	pintos/src/tests/filesys/extended/mk-tree.c	/^do_touch (const char *format, ...)$/;"	f	file:
 do_write	pintos/src/tests/filesys/extended/tar.c	/^do_write (int fd, const char *buffer, int size, bool *write_error) $/;"	f	file:
+donate_priority	pintos/src/threads/thread.c	/^void donate_priority(struct thread* donator, struct thread *recipient)$/;"	f
+donated	pintos/src/threads/thread.h	/^    bool donated; \/\/MODIFIED BY US$/;"	m	struct:thread
 donatedPriority	pintos/src/threads/thread.h	/^    int donatedPriority; \/\/MODIFIED BY US$/;"	m	struct:thread
 donor_thread_func	pintos/src/tests/threads/priority-donate-chain.c	/^donor_thread_func (void *locks_) $/;"	f	file:
 donor_thread_func	pintos/src/tests/threads/priority-donate-chain.c	/^static thread_func donor_thread_func;$/;"	v	file:
@@ -1262,6 +1264,7 @@ lock_acquire	pintos/src/threads/synch.c	/^lock_acquire (struct lock *lock)$/;"	f
 lock_and_sema	pintos/src/tests/threads/priority-donate-sema.c	/^struct lock_and_sema $/;"	s	file:
 lock_held_by_current_thread	pintos/src/threads/synch.c	/^lock_held_by_current_thread (const struct lock *lock) $/;"	f
 lock_init	pintos/src/threads/synch.c	/^lock_init (struct lock *lock)$/;"	f
+lock_list	pintos/src/threads/thread.c	/^static struct list lock_list;$/;"	v	typeref:struct:list	file:
 lock_pair	pintos/src/tests/threads/priority-donate-chain.c	/^struct lock_pair$/;"	s	file:
 lock_release	pintos/src/threads/synch.c	/^lock_release (struct lock *lock) $/;"	f
 lock_try_acquire	pintos/src/threads/synch.c	/^lock_try_acquire (struct lock *lock)$/;"	f
@@ -1339,6 +1342,7 @@ mapid_t	pintos/src/lib/user/syscall.h	/^typedef int mapid_t;$/;"	t
 matmult_SRC	pintos/src/examples/Makefile	/^matmult_SRC = matmult.c$/;"	m
 max	pintos/src/utils/Pintos.pm	/^sub max {$/;"	s
 max_length	pintos/src/lib/stdio.c	/^    int max_length;     \/* Max length of output string. *\/$/;"	m	struct:vsnprintf_aux	file:
+max_priority_thread	pintos/src/threads/thread.c	/^max_priority_thread(void)$/;"	f
 mcat_SRC	pintos/src/examples/Makefile	/^mcat_SRC = mcat.c$/;"	m
 mcp_SRC	pintos/src/examples/Makefile	/^mcp_SRC = mcp.c$/;"	m
 medium_thread_func	pintos/src/tests/threads/priority-donate-nest.c	/^medium_thread_func (void *locks_) $/;"	f	file:
