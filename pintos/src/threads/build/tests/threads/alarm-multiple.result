@@ -1,1 +1,8 @@
-PASS
+FAIL
+Kernel panic in run: PANIC at ../../threads/synch.c:203 in lock_acquire(): assertion `!intr_context ()' failed.
+Call stack: 0xc00285f9 0xc0022d6d 0xc002a5c9 0xc0021290
+Translation of call stack:
+0xc00285f9: debug_panic (.../../lib/kernel/debug.c:38)
+0xc0022d6d: lock_acquire (...../../threads/synch.c:204)
+0xc002a5c9: sleeper (.../threads/alarm-wait.c:149)
+0xc0021290: kernel_thread (..../../threads/thread.c:585)
